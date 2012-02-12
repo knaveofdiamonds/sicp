@@ -28,16 +28,35 @@
 (define (improve guess x)
   (average guess (/ x guess)))
 
-(define (good-enough? guess x)
+(define (good-enough? _ guess x)
   (< (abs (- (square guess) x)) 0.001))
 
-(define (sqrt-iter guess x)
-  (if (good-enough? guess x)
+(define (good-enough2? old-guess guess _)
+  (< (/ (abs (- old-guess guess)) guess) 0.001))
+
+(define (sqrt-iter old-guess guess x)
+  (if (good-enough2? old-guess guess x)
       guess
-      (sqrt-iter (improve guess x)
+      (sqrt-iter guess
+                 (improve guess x)
                  x)))
 
 (define (sqrt1 x)
-  (sqrt-iter 1.0 x))
+  (sqrt-iter 0.0 1.0 x))
 
-;; (sqrt1 0.00001) -> 0.03, (sqrt 0.00001) -> 0.1
+;; (sqrt1 0.00001) -> 0.03, (sqrt 0.00001) -> 0.01
+
+;; 1.8
+
+(define (improve-cube guess x)
+  (/ (+ (/ x (square guess)) (* 2 guess)) 3))
+
+(define (cbrt-iter old-guess guess x)
+  (if (good-enough2? old-guess guess x)
+      guess
+      (cbrt-iter guess
+                 (improve-cube guess x)
+                 x)))
+
+(define (cbrt x)
+  (cbrt-iter 0.0 1.0 x))
