@@ -41,13 +41,13 @@
         (else (A (- x 1)
                  (A x (- y 1))))))
 
-(A 1 10)
+;(A 1 10)
 ; 1024
 
-(A 2 4)
+;(A 2 4)
 ; 65536
 
-(A 3 3)
+;(A 3 3)
 ; 65536
 
 ; Gives 2y
@@ -87,5 +87,8 @@
       n
       (f-iter-impl n 2 1 0 2)))
       
-  
-  
+;; 1.12
+
+(define (pascal row col)
+  (if (or (eq? col 1) (eq? col row)) 1
+      (+ (pascal (- row 1) (- col 1)) (pascal (- row 1) col))))
