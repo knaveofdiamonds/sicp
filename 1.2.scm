@@ -65,5 +65,27 @@
   (if (< n 3)
       n
       (+ (f (- n 1)) 
-	 (f (- n 2)) 
-	 (f (- n 3)))))
+	 (* 2 (f (- n 2))) 
+	 (* 3 (f (- n 3))))))
+
+;; (f 0) # 0
+;; (f 1) # 1
+;; (f 2) # 2
+
+;; (f 3)
+;; (+ (* 1 2) (* 2 1) (* 3 0)) # 4
+
+;; (f 4)
+;; (+ (* 1 4) (* 2 2) (* 3 1))
+
+(define (f-iter n)
+  (define (f-iter-impl n a b c counter)
+    (if (eq? n counter)
+        a
+        (f-iter-impl n (+ a (* 2 b) (* 3 c)) a b (+ 1 counter))))
+  (if (< n 3)
+      n
+      (f-iter-impl n 2 1 0 2)))
+      
+  
+  
