@@ -155,3 +155,16 @@
 
 ;; p applied 5 times
 ;; O(log a) growth, O(log a) space
+
+;; 1.16
+
+(define (square x) (* x x))
+
+(define (fast-expt b n)
+  (define (fast-expt-impl b n a)
+    (if (eq? n 1)
+        a
+        (if (even? n)
+            (fast-expt-impl b (/ n 2) (* a (square b)))
+            (* b (fast-expt-impl b (/ (- n 1) 2) (* a (square b)))))))
+  (fast-expt-impl b n 1))
