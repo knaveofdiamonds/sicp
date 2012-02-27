@@ -168,3 +168,17 @@
             (fast-expt-impl b (/ n 2) (* a (square b)))
             (* b (fast-expt-impl b (/ (- n 1) 2) (* a (square b)))))))
   (fast-expt-impl b n 1))
+
+;; 1.17
+
+(define (halve n)
+  (/ n 2))
+
+(define (double n)
+  (* n 2))
+
+(define (fast-mult a b)
+  (cond ((or (= a 0) (= b 0)) 0)
+        ((= b 1) a)
+        ((even? b) (double (fast-mult a (halve b))))
+        (else (+ a (fast-mult a (- b 1))))))
