@@ -182,3 +182,11 @@
         ((= b 1) a)
         ((even? b) (double (fast-mult a (halve b))))
         (else (+ a (fast-mult a (- b 1))))))
+
+;; 1.18
+
+(define (fast-mult-iter a b)
+    (cond ((or (eq? b 0) (eq? a 0)) 0)
+          ((eq? a 1) b)
+          ((even? a) (fast-mult-iter (halve a) (double b)))
+          (else (+ b (fast-mult-iter (- a 1) b)))))
