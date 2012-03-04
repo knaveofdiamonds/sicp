@@ -61,3 +61,31 @@
 
 (define (product3 term a next b)
   (accumulate * 1 term a next b))
+
+;; 1.33
+
+(define (filter-accumulate predicate combiner null-value term a next b)
+  (define (iter a result)
+    (if (> a b)
+        result
+        (iter (next a) (if (predicate a) (combiner (term a) result) result))))
+  (iter a null-value))
+
+(define (sum-of-primes-between a b)
+  (filter-accumulate prime? + 0 identity a inc b))
+
+; From 1.2
+(define (square x) (* x x))
+
+(define (smallest-divisor n)
+  (find-divisor n 2))
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+        ((divides? test-divisor n) test-divisor)
+        (else (find-divisor n (+ test-divisor 1)))))
+(define (divides? a b)
+  (= (remainder b a) 0))
+(define (prime? n)
+  (= n (smallest-divisor n)))
+; End 1.2
+
