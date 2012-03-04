@@ -1,9 +1,3 @@
-(define (sum term a next b)
-  (if (> a b)
-      0
-      (+ (term a)
-         (sum term (next a) next b))))
-
 (define (cube x) (* x x x))
 
 ;; 1.29
@@ -22,3 +16,12 @@
                 (yk n))))
                        
 ; Gives 1/4 for both n = 100 and n = 1000
+
+;; 1.30
+
+(define (sum term a next b)
+  (define (iter a result)
+    (if (> a b)
+        result
+        (iter (next a) (+ (term a) result))))
+  (iter a 0))
