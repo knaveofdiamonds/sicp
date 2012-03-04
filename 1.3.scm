@@ -89,3 +89,9 @@
   (= n (smallest-divisor n)))
 ; End 1.2
 
+;; 1.34
+
+(define (f g)
+  (g 2))
+
+; We'll get an error calling (f f), because eventually we'll be trying to evaluate (2 2) which doesn't make sense.
